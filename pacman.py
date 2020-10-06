@@ -503,6 +503,9 @@ def readCommand( argv ):
     parser.add_option('-g', '--ghosts', dest='ghost',
                       help=default('the ghost agent TYPE in the ghostAgents module to use'),
                       metavar = 'TYPE', default='RandomGhost')
+    parser.add_option('-g_dummie', '--ghosts_dummie', dest='ghost_dummie',
+                      help=default('the ghost agent TYPE in the ghostAgents module to use'),
+                      metavar = 'TYPE', default='None')
     parser.add_option('-k', '--numghosts', type='int', dest='numGhosts',
                       help=default('The maximum number of ghosts to use'), default=4)
     parser.add_option('-z', '--zoom', type='float', dest='zoom',
@@ -551,9 +554,16 @@ def readCommand( argv ):
         options.numQuiet = int(agentOpts['numTrain'])
         options.numIgnore = int(agentOpts['numTrain'])
 
-    # Choose a ghost agent
-    ghostType = loadAgent(options.ghost, noKeyboard)
-    args['ghosts'] = [ghostType( i+1 ) for i in range( options.numGhosts )]
+    if(options.ghost_dummie == "None"):
+        # Choose a ghost agent
+        ghostType = loadAgent(options.ghost, noKeyboard)
+        args['ghosts'] = [ghostType( i+1 ) for i in range( options.numGhosts )]
+    else:
+        # Choose a ghost agent
+        ghostType = loadAgent(options.ghost, noKeyboard)
+        args['ghosts'] = [ghostType( i+1 ) for i in range( options.numGhosts-1 )]
+        ghostType = loadAgent(options.ghost_dummie, noKeyboard)
+        args['ghosts_dummie'] = [ghostType( options.numGhosts+1 )]
 
     # Choose a display format
     if options.quietGraphics:
