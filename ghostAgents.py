@@ -200,7 +200,7 @@ class CentralGhost( GhostAgent ):
     isScared = ghostState.scaredTimer > 0
     if self.index == 1:
         choke_points = self.getChockingPoints(state)
-        for i in range(1,3):
+        for i in range(1,5):
             if(len(choke_points) > i):
                 CHOKE_DECISION[i] = choke_points[i]
             else:
