@@ -91,12 +91,12 @@ class RuleGhost( GhostAgent ):
     choke_points = self.getChockingPoints(state)
     target_point = None
 
-    for index in CHOKE_DECISION.keys():
-      if index != self.index:
-        try:
-          choke_points.remove(CHOKE_DECISION[index])
-        except:
-          pass
+    # for index in CHOKE_DECISION.keys():
+    #   if index != self.index:
+    #     try:
+    #       choke_points.remove(CHOKE_DECISION[index])
+    #     except:
+    #       pass
 
     # Select best actions given the state
     max_distance = 10000
@@ -198,7 +198,15 @@ class CentralGhost( GhostAgent ):
     legalActions = state.getLegalActions( self.index )
     pos = state.getGhostPosition( self.index )
     isScared = ghostState.scaredTimer > 0
-    choke_points = self.getChockingPoints(state)
+    if self.index == 1:
+        choke_points = self.getChockingPoints(state)
+        for i in range(1,3):
+            if(len(choke_points) > i):
+                CHOKE_DECISION[i] = choke_points[i]
+            else:
+                CHOKE_DECISION[i] = state.getPacmanPosition()
+    else:
+        choke_points = CHOKE_DECISION.values()
     target_point = None
 
     for index in CHOKE_DECISION.keys():
@@ -223,7 +231,7 @@ class CentralGhost( GhostAgent ):
         max_distance = distance
         target_point = c
 
-    CHOKE_DECISION[self.index] = target_point
+    # CHOKE_DECISION[self.index] = target_point
 
     if target_point == None:
       target_point = state.getPacmanPosition()
