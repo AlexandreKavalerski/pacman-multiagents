@@ -91,12 +91,12 @@ class RuleGhost( GhostAgent ):
     choke_points = self.getChockingPoints(state)
     target_point = None
 
-    for index in CHOKE_DECISION.keys():
-      if index != self.index:
-        try:
-          choke_points.remove(CHOKE_DECISION[index])
-        except:
-          pass
+    # for index in CHOKE_DECISION.keys():
+    #   if index != self.index:
+    #     try:
+    #       choke_points.remove(CHOKE_DECISION[index])
+    #     except:
+    #       pass
 
     # Select best actions given the state
     max_distance = 10000
